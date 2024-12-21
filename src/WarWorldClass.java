@@ -44,4 +44,15 @@ public class WarWorldClass implements TextFinder{
         }
         return count;
     }
+    public int countWordMethodSecond(StringBuilder text, String findWord) {
+        int counter =0;
+        int lastPosition =0;
+        String lowerCase = text.toString().toLowerCase();
+        while (lowerCase.indexOf(findWord,lastPosition)>=0) {
+            counter++;
+            lastPosition = lowerCase.indexOf(findWord,lastPosition)+findWord.length();
+        }
+        return counter;
+    }
+
 }

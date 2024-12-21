@@ -21,11 +21,15 @@ public class Task2_2 {
             switch (ch) {
                 case 1:
                     final String regex1 = "[Вв]ойна";
-                    System.out.println("Количество слов 'война' = " + warText.countWord(textBuilder, regex1));
+                    final String warWord = "война";
+                    System.out.println("Количество слов 'война' (регулярка) = " + warText.countWord(textBuilder, regex1));
+                    System.out.println("Количество слов 'война' (поиск по строке) = " + warText.countWordMethodSecond(textBuilder, warWord));
                     break;
                 case 2:
                     final String regex2 = "[Мм]ир";
-                    System.out.println("Количество слов 'мир' = " + warText.countWord(textBuilder, regex2));
+                    final String worldWord = "мир";
+                    System.out.println("Количество слов 'мир'  (регулярка) = " + warText.countWord(textBuilder, regex2));
+                    System.out.println("Количество слов 'мир' (поиск по строке) = " + warText.countWordMethodSecond(textBuilder, worldWord));
                     break;
                 case 3:
                     final String regex3 = "\\sи\\s";
