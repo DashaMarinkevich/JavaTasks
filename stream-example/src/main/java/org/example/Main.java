@@ -171,16 +171,12 @@ public class Main {
         List<House> houses = Util.getHouses();
         List<Person> listHospital = houses.stream()
                 .filter(x -> "Hospital".equals(x.getBuildingType()))
-                .flatMap(person -> {
-                    return person.getPersonList().stream();
-                })
+                .flatMap(person -> person.getPersonList().stream())
                 .toList();
 
         List<Person> listYoungOld = houses.stream()
                 .filter(x -> !"Hospital".equals(x.getBuildingType()))
-                .flatMap(person -> {
-                    return person.getPersonList().stream();
-                })
+                .flatMap(person -> person.getPersonList().stream())
                 .filter(p -> {
                     int years = Period.between(p.getDateOfBirth(), LocalDate.now()).getYears();
                     return years <= 18 || years >= 60;
@@ -188,43 +184,36 @@ public class Main {
                 .toList();
 
         List<Person> listAll = houses.stream()
-                .flatMap(person -> {
-                    return person.getPersonList().stream();
-                }).toList();
-        List<Person> listNew = new ArrayList(listAll);
+                .flatMap(person -> person.getPersonList().stream())
+                .collect(Collectors.toList());
 
         System.out.println("Больные:");
-        for (int i = 0; i < listHospital.size(); i++) {
-            System.out.println("listHospital = " + listHospital.get(i).toString());
-        }
+        listHospital.forEach(System.out::println);
         System.out.println("Больные количество =" + listHospital.size());
         System.out.println("Вторая очередь детей и стариков (до 18 и пенсионного возраста):");
-        for (int i = 0; i < listYoungOld.size(); i++) {
-            System.out.println("listYoungOld = " + listYoungOld.get(i).toString());
-        }
+        listYoungOld.forEach(System.out::println);
         System.out.println("Вторая очередь количество =" + listYoungOld.size());
+
+        listAll.removeAll(listHospital);
+        listAll.removeAll(listYoungOld);
         System.out.println("Остальные:");
-        listNew.removeAll(listHospital);
-        listNew.removeAll(listYoungOld);
-        List<Person> listOther = listNew.stream()
+        List<Person> listOther = listAll.stream()
                 .limit(500 - listHospital.size() - listYoungOld.size())
                 .toList();
-        for (int i = 0; i < listOther.size(); i++) {
-            System.out.println("listOther = " + listOther.get(i).toString());
-        }
+        listOther.forEach(System.out::println);
         System.out.println("Остальные количество =" + listOther.size());
     }
 
     private static void task14() throws IOException {
         List<Car> cars = Util.getCars();
-        List<Car> carsTurk = new ArrayList<>();
+       // List<Car> carsTurk = new ArrayList<>();
         List<Car> carsRussia = new ArrayList<>();
         List<Car> carsUzbek = new ArrayList<>();
         List<Car> carsKazax = new ArrayList<>();
         List<Car> carsKarg = new ArrayList<>();
         List<Car> carsMongol = new ArrayList<>();
         DecimalFormat df = new DecimalFormat("#.##");
-        carsTurk =
+        List<Car> carsTurk =
                 cars.stream()
                         .filter(model -> "Jaguar".equals(model.getCarMake()) || "White".equals(model.getColor()))
                         .toList();
